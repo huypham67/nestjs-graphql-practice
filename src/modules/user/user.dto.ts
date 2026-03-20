@@ -27,3 +27,13 @@ export class CreateUserInput {
   @Field()
   password: string;
 }
+
+@InputType()
+export class UpdateUserInput {
+  @Field()
+  name?: string;
+  @Field()
+  email?: string;
+  @Field()
+  password?: string;
+}
