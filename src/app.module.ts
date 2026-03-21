@@ -5,6 +5,7 @@ import { UserModule } from './modules/user/user.module';
 import path from 'path';
 import { SharedModule } from 'src/shared/shared.module';
 import { ConfigModule } from '@nestjs/config';
+import { PostModule } from './modules/post/post.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { ConfigModule } from '@nestjs/config';
     }),
     UserModule,
     SharedModule,
+    PostModule,
   ],
 })
 export class AppModule {}
