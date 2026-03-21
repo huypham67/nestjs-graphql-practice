@@ -14,6 +14,12 @@ export class UserRepository {
     return this.prisma.user.findUnique({ where: { id } });
   }
 
+  findManyByIds(ids: number[]): Promise<User[]> {
+    return this.prisma.user.findMany({
+      where: { id: { in: ids } },
+    });
+  }
+
   create(data: Prisma.UserCreateInput): Promise<User> {
     return this.prisma.user.create({
       data,

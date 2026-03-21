@@ -13,6 +13,10 @@ export class UserService {
     return this.userRepository.findOne(id);
   }
 
+  findManyByIds(ids: number[]) {
+    return this.userRepository.findManyByIds(ids);
+  }
+
   create(createUserInput: CreateUserInput) {
     return this.userRepository.create(createUserInput);
   }

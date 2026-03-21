@@ -9,7 +9,6 @@ import {
 } from '@nestjs/graphql';
 import { ZodValidationPipe } from 'nestjs-zod';
 import { User } from '../user/user.dto';
-import { UserService } from '../user/user.service';
 import { PostService } from 'src/modules/post/post.service';
 import {
   CreatePostBodySchema,
@@ -20,12 +19,13 @@ import {
   Post,
   UpdatePostInput,
 } from 'src/modules/post/post.dto';
+import { UserLoader } from 'src/modules/user/user.loader';
 
 @Resolver(() => Post)
 export class PostResolver {
   constructor(
     private readonly postService: PostService,
-    private readonly userService: UserService,
+    private readonly userLoader: UserLoader,
   ) {}
 
   @Query(() => [Post])
@@ -60,8 +60,9 @@ export class PostResolver {
     return this.postService.delete(id);
   }
 
+  // Cái này chỉ được gọi khi client yêu cầu field author của Post, không phải khi gọi query posts hoặc post
   @ResolveField(() => User)
   author(@Parent() post: Post) {
-    return this.userService.findOne(post.authorId);
+    return this.userLoader.batchUsers.load(post.authorId);
   }
 }
